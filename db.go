@@ -17,6 +17,10 @@ func NewMySQLStorage(cfg mysql.Config) *MySQLStorage {
 		log.Fatal(err)
 	}
 	log.Println("Connected to mysql storage")
+	err = db.Ping()
+	if err != nil {
+		log.Fatal("Something went wrong on database connection", err)
+	}
 	return &MySQLStorage{
 		db,
 	}

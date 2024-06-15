@@ -21,3 +21,9 @@ func NewMySQLStorage(cfg mysql.Config) *MySQLStorage {
 		db,
 	}
 }
+
+func (s *MySQLStorage) Init() (*sql.DB, error) {
+	//initialize the tables
+	return s.db, nil
+
+}

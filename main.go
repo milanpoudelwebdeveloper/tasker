@@ -1,9 +1,19 @@
 package main
 
-import "fmt"
+import (
+	"log"
+
+	"github.com/go-sql-driver/mysql"
+)
 
 func main() {
-	store := NewStore()
-	api := newAPIServer(":3000", nil)
-	fmt.Println("Hello, World!")
+	cfg := mysql.Config{}
+	sqlStorage := NewMySQLStorage(cfg)
+	db, err := sqlStorage.Init()
+	if err != nil {
+		log.Fatal(err)
+	}
+	store := NewStore(db)
+	api := newAPIServer(":3000", store)
+	api.Serve()
 }
